@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+  <versionedSettings rootId="Aries_HttpsGithubComJaswingAriesGitRefsHeadsMaster" enabled="true" showChanges="true" />
+  <issueTrackers>
+    <trackerConnection key="youtrack1" type="youtrack">
+      <param name="secure:password" value="zxx775d03cbe80d301b" />
+      <param name="name" value="youtrack" />
+      <param name="host" value="http://10.0.1.2:8080/youtrack" />
+      <param name="idPrefix" value="aries" />
+      <param name="autoSync" value="true" />
+      <param name="username" value="" />
+    </trackerConnection>
+  </issueTrackers>
+  <report-tabs>
+    <report-tab title="project Report" buildTypeId="Aries_Build">
+      <revisionRule name="lastSuccessful" revision="latest.lastSuccessful" />
+    </report-tab>
+    <build-report-tab title="build Report" />
+  </report-tabs>
+</settings>
+
