@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 /**
- * @author xperad
+ * @author sun@xperad.com
  * @version 1.0, 2015/05/18
  */
 
@@ -49,7 +49,7 @@ public class HibernateConfig {
         properties.put("dynamic-update", "true");
 
         LocalSessionFactoryBean factory = new LocalSessionFactoryBean();
-        factory.setPackagesToScan(new String[] {"com.jaswing.aries.persistence.model"});
+        factory.setPackagesToScan(new String[] {"com.xperad.aries.persistence.model"});
         factory.setDataSource(dataSource());
         factory.setHibernateProperties(properties);
         factory.afterPropertiesSet();
