@@ -1,5 +1,6 @@
 package com.xperad.aries.persistence.model;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Column;
@@ -63,5 +64,15 @@ public class Message extends BaseEntity {
         result = 31 * result + (getTitle() != null ? getTitle().hashCode() : 0);
         result = 31 * result + (getMessage() != null ? getMessage().hashCode() : 0);
         return result;
+    }
+
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("id", super.getId())
+                .append("title", this.getTitle())
+                .append("message", this.getMessage())
+                .toString();
     }
 }
