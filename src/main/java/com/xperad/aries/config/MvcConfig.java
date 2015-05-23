@@ -19,12 +19,12 @@ import org.springframework.web.servlet.view.JstlView;
 import java.util.Locale;
 
 /**
- * @author xperad
+ * @author sun@xperad.com
  * @version 1.0, 2015/05/18
  */
 
 @Configuration
-@ComponentScan(basePackages = {"com.xperad.aries.controller"})
+@ComponentScan(basePackages = {"com.xperad.aries.controller", "com.xperad.aries.service"})
 @EnableWebMvc
 public class MvcConfig extends WebMvcConfigurerAdapter {
 
