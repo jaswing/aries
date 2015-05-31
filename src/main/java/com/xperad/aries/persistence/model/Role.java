@@ -31,7 +31,7 @@ public class Role extends BaseEntity implements Serializable {
     private String roleName;
 
     @OneToMany
-    @JoinTable(name = "t_user_roles",
+    @JoinTable(name = "t_user_role",
             joinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}
     )

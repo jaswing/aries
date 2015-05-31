@@ -2,8 +2,11 @@ package com.xperad.aries.service;
 
 import com.xperad.aries.exception.DuplicateUserException;
 import com.xperad.aries.exception.UserNotFoundException;
-import com.xperad.aries.persistence.UserRepository;
+import com.xperad.aries.persistence.model.Role;
+import com.xperad.aries.persistence.repository.RoleRepository;
+import com.xperad.aries.persistence.repository.UserRepository;
 import com.xperad.aries.persistence.model.User;
+import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
@@ -15,6 +18,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -31,11 +38,22 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
     @Override
     @Transactional(readOnly = false)
     public void addUser(User user) throws DuplicateUserException {
-        User userToCheck = userRepository.read(user.getId());
-        if (userToCheck == null) {
+        Criterion criterion = Restrictions.eq("username", user.getUsername());
+        List<User> usersToCheck = userRepository.findByCriteria(criterion);
+        if (usersToCheck == null || usersToCheck.size() == 0) {
+            Role userRole = roleRepository.read(2);
+            user.setRole(userRole);
+            user.setEnabled(true);
+            user.setDateInfo(LocalDate.now());
+            user.setTimeInfo(LocalDateTime.now());
+            user.setZonedDateTime1(ZonedDateTime.now(ZoneId.of("Europe/Paris")));
+            user.setZonedDateTime2(ZonedDateTime.now(ZoneId.of("Asia/Tokyo")));
             userRepository.create(user);
         } else {
             throw new DuplicateUserException("Creating user failed. (user exists)");

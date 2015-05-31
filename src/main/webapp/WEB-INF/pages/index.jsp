@@ -8,6 +8,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title><s:message code="app.title"/></title>
+    <s:url value="/resources/css/style.css" var="URL_CSS_STYLE" />
+    <link rel="stylesheet" type="text/css" href="${URL_CSS_STYLE}">
 </head>
 <body>
 <h1><s:message code="app.title"/></h1>
@@ -37,9 +39,12 @@
     <div>${user.username}</div>
     <div>${user.role}</div>
 </sec:authorize>
+
 <sec:authorize access="isAnonymous()">
     <s:url value="/login" var="URL_LOGIN"/>
-    <a href="${URL_LOGIN}"><s:message code="auth.button.login"/> </a>
+    <s:url value="/signUp"  var="URL_SIGNUP"/>
+    <input type="button" value="<s:message code='auth.button.login'/>" onclick="location.href='${URL_LOGIN}'"/>
+    <input type="button" value="<s:message code='auth.button.signUp'/>" onclick="location.href='${URL_SIGNUP}'"/>
 </sec:authorize>
 </body>
 </html>

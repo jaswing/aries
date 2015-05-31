@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title><s:message code="app.title"/></title>
+    <s:url value="/resources/css/style.css" var="URL_CSS_STYLE" />
+    <link rel="stylesheet" type="text/css" href="${URL_CSS_STYLE}">
 </head>
 <body>
 <h1><s:message code="app.title"/></h1>
@@ -20,7 +22,7 @@
         <c:if test="${param.error != null}">
             <h5><s:message code="auth.message.loginFail"/></h5>
             <c:if test="${SPRING_SECURITY_LAST_EXCEPTION != null}">
-                <p>
+                <p class="validate_err">
                     <s:message code="auth.message.cause"/>:
                     <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>
                 </p>

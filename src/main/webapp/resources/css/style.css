@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+body {
+    font-size: 10pt;
+}
+
+.validate_err {
+    color: red;
+}

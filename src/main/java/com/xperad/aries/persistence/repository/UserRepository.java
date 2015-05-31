@@ -1,7 +1,6 @@
-package com.xperad.aries.persistence;
+package com.xperad.aries.persistence.repository;
 
 import com.xperad.aries.persistence.model.User;
-import com.xperad.aries.persistence.repository.AbstractRepository;
 import org.springframework.stereotype.Repository;
 
 /**
