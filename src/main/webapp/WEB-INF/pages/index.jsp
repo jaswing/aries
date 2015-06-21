@@ -31,20 +31,19 @@
 
 <sec:authorize access="isAuthenticated()">
     <s:url value="/logout" var="URL_LOGOUT"/>
+    <s:url value="/users" var="URL_USERS"/>
     <form action="${URL_LOGOUT}" method="post">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <input type="submit" value="<s:message code='auth.button.logout'/>"/>
     </form>
-    <div>${user}</div>
-    <div>${user.username}</div>
-    <div>${user.role}</div>
+    <button onclick="location.href='${URL_USERS}/${user.id}'"><s:message code="user.info"/></button>
 </sec:authorize>
 
 <sec:authorize access="isAnonymous()">
     <s:url value="/login" var="URL_LOGIN"/>
     <s:url value="/signUp"  var="URL_SIGNUP"/>
-    <input type="button" value="<s:message code='auth.button.login'/>" onclick="location.href='${URL_LOGIN}'"/>
-    <input type="button" value="<s:message code='auth.button.signUp'/>" onclick="location.href='${URL_SIGNUP}'"/>
+    <button onclick="location.href='${URL_LOGIN}'"><s:message code="auth.button.login"/></button>
+    <button onclick="location.href='${URL_SIGNUP}'"><s:message code="auth.button.signUp"/></button>
 </sec:authorize>
 </body>
 </html>

@@ -1,11 +1,17 @@
 package com.xperad.aries.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.Ordered;
+import org.springframework.data.repository.support.DomainClassConverter;
+import org.springframework.format.support.FormattingConversionService;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -18,6 +24,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import java.nio.charset.Charset;
 import java.util.Locale;
 
 /**
@@ -28,9 +35,12 @@ import java.util.Locale;
 @Configuration
 @ComponentScan(basePackages = {"com.xperad.aries.controller", "com.xperad.aries.service"})
 @EnableWebMvc
-public class MvcConfig extends WebMvcConfigurerAdapter {
+public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
-    public MvcConfig() {
+    @Autowired
+    private FormattingConversionService mvcConversionService;
+
+    public WebMvcConfig() {
         super();
     }
 
@@ -42,7 +52,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**").addResourceLocations("/", "/resources/");
+        registry.addResourceHandler("/resources/**").addResourceLocations("/", "/resources/").setCachePeriod(31556926);
+        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 
     @Override
@@ -76,6 +87,21 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         messageSource.setDefaultEncoding("UTF-8");
         messageSource.setCacheSeconds(0);
         return messageSource;
+    }
+
+    @Bean
+    public StringHttpMessageConverter stringHttpMessageConverter() {
+        return new StringHttpMessageConverter(Charset.forName("UTF-8"));
+    }
+
+    @Bean
+    public MultipartResolver multipartResolver() {
+        return new StandardServletMultipartResolver();
+    }
+
+    @Bean
+    public DomainClassConverter<?> domainClassConverter() {
+        return new DomainClassConverter<FormattingConversionService>(mvcConversionService);
     }
 
 }

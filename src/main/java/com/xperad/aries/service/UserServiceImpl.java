@@ -3,10 +3,9 @@ package com.xperad.aries.service;
 import com.xperad.aries.exception.DuplicateUserException;
 import com.xperad.aries.exception.UserNotFoundException;
 import com.xperad.aries.persistence.model.Role;
+import com.xperad.aries.persistence.model.User;
 import com.xperad.aries.persistence.repository.RoleRepository;
 import com.xperad.aries.persistence.repository.UserRepository;
-import com.xperad.aries.persistence.model.User;
-import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
@@ -16,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -30,7 +28,6 @@ import java.util.List;
  */
 
 @Service
-@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
 
     final Logger logger = LoggerFactory.getLogger(getClass());
@@ -42,7 +39,6 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
 
     @Override
-    @Transactional(readOnly = false)
     public void addUser(User user) throws DuplicateUserException {
         Criterion criterion = Restrictions.eq("username", user.getUsername());
         List<User> usersToCheck = userRepository.findByCriteria(criterion);
@@ -56,7 +52,25 @@ public class UserServiceImpl implements UserService {
             user.setZonedDateTime2(ZonedDateTime.now(ZoneId.of("Asia/Tokyo")));
             userRepository.create(user);
         } else {
-            throw new DuplicateUserException("Creating user failed. (user exists)");
+            throw new DuplicateUserException("Creating user failed. user exists: " + user.getUsername());
+        }
+    }
+
+    @Override
+    public User addUserReturn(User user) throws DuplicateUserException {
+        Criterion criterion = Restrictions.eq("username", user.getUsername());
+        List<User> usersToCheck = userRepository.findByCriteria(criterion);
+        if (usersToCheck == null || usersToCheck.size() == 0) {
+            Role userRole = roleRepository.read(2);
+            user.setRole(userRole);
+            user.setEnabled(true);
+            user.setDateInfo(LocalDate.now());
+            user.setTimeInfo(LocalDateTime.now());
+            user.setZonedDateTime1(ZonedDateTime.now(ZoneId.of("Europe/Paris")));
+            user.setZonedDateTime2(ZonedDateTime.now(ZoneId.of("Asia/Tokyo")));
+            return userRepository.create(user);
+        } else {
+            throw new DuplicateUserException("Creating user failed. user exists: " + user.getUsername());
         }
     }
 
@@ -87,7 +101,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(readOnly = false)
     public void updateUser(User user) throws Exception {
         User userToUpdate = userRepository.read(user.getId());
         if (userToUpdate == null) {
@@ -102,7 +115,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(readOnly = false)
     public void deleteUser(int userId) throws Exception {
         userRepository.delete(userId);
     }

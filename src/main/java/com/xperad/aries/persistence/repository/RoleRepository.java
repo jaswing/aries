@@ -2,6 +2,7 @@ package com.xperad.aries.persistence.repository;
 
 import com.xperad.aries.persistence.model.Role;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author sun@xperad.com
@@ -9,5 +10,6 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
+@Transactional(readOnly = true)
 public class RoleRepository extends AbstractRepository<Role, Integer> {
 }

@@ -14,50 +14,71 @@
 <body>
 <h1><s:message code="app.title"/></h1>
 
-<sf:form modelAttribute="user" method="post" enctype="utf8">
-    <div>
-        <label><s:message code="label.user.firstName"/></label>
-        <sf:input path="firstName"/>
-        <sf:errors path="firstName" element="div" cssClass="validate_err"/>
-    </div>
-    <div>
-        <label><s:message code="label.user.lastName"/></label>
-        <sf:input path="lastName"/>
-        <sf:errors path="lastName" element="div" cssClass="validate_err"/>
-    </div>
-    <div>
-        <label><s:message code="label.user.gender"/></label>
-        <c:if test="${genderArr ne null and genderArr.size() > 0}">
-            <sf:radiobuttons path="male" items="${genderArr}"/>
-        </c:if>
-    </div>
-    <div>
-        <label><s:message code="label.user.emailAddress"/></label>
-        <sf:input path="emailAddress"/>
-        <sf:errors path="emailAddress" element="div" cssClass="validate_err"/>
-    </div>
-    <div>
-        <label><s:message code="label.user.username"/></label>
-        <sf:input path="username"/>
-        <sf:errors path="username" element="div" cssClass="validate_err"/>
-    </div>
-    <div>
-        <label><s:message code="label.user.password"/></label>
-        <sf:password path="password"/>
-        <sf:errors path="password" element="div" cssClass="validate_err"/>
-    </div>
-    <div>
-        <label><s:message code="label.user.confirmPassword"/></label>
-        <sf:password path="matchingPassword"/>
-        <sf:errors element="div" cssClass="validate_err"/>
-    </div>
+<sf:form modelAttribute="user" method="post" action="signUp" acceptCharset="UTF-8">
+    <fieldset>
+        <legend><s:message code="auth.message.signupTitle"/></legend>
+        <p>
+            <label class="input-label" for="firstName"><s:message code="label.user.firstName"/></label>
+            <span class="input-field">
+                <sf:input path="firstName"/>
+                <sf:errors path="firstName" element="span" cssClass="valid-error"/>
+            </span>
+        </p>
 
-    <button type="submit"><s:message code="label.form.submit"/></button>
+        <p>
+            <label class="input-label" for="lastName"><s:message code="label.user.lastName"/></label>
+            <span class="input-field">
+                <sf:input path="lastName"/>
+                <sf:errors path="lastName" element="span" cssClass="valid-error"/>
+            </span>
+        </p>
+
+        <p>
+            <label class="input-label" for="male"><s:message code="label.user.gender"/></label>
+            <span class="input-field2"><sf:radiobuttons path="male" items="${genderMap}"/></span>
+        </p>
+
+        <p>
+            <label class="input-label" for="emailAddress"><s:message code="label.user.emailAddress"/></label>
+            <span class="input-field">
+                <sf:input path="emailAddress"/>
+                <sf:errors path="emailAddress" element="span" cssClass="valid-error"/>
+            </span>
+        </p>
+
+        <p>
+            <label class="input-label" for="username"><s:message code="label.user.username"/></label>
+            <span class="input-field">
+                <sf:input path="username"/>
+                <sf:errors path="username" element="span" cssClass="valid-error"/>
+            </span>
+        </p>
+
+        <p>
+            <label class="input-label" for="password"><s:message code="label.user.password"/></label>
+            <span class="input-field">
+                <sf:password path="password"/>
+                <sf:errors path="password" element="span" cssClass="valid-error"/>
+            </span>
+        </p>
+
+        <p>
+            <label class="input-label" for="matchingPassword"><s:message code="label.user.confirmPassword"/></label>
+            <span class="input-field">
+                <sf:password path="matchingPassword"/>
+                <sf:errors element="span" cssClass="valid-error"/>
+            </span>
+        </p>
+
+        <button type="submit"><s:message code="label.form.submit"/></button>
+    </fieldset>
 </sf:form>
 
 <hr/>
 
 <s:url value="/login" var="URL_LOGIN"/>
-<input type="button" value="<s:message code='auth.button.login'/>" onclick="location.href='${URL_LOGIN}'"/>
+<s:url value="/" var="URL_ROOT"/>
+<button onclick="location.href='${URL_LOGIN}'"><s:message code="auth.button.login"/></button>
+<button onclick="location.href='${URL_ROOT}'"><s:message code="auth.button.top"/></button>
 </body>
 </html>

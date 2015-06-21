@@ -7,10 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title><s:message code="app.title"/></title>
-    <s:url value="/resources/css/style.css" var="URL_CSS_STYLE" />
+    <s:url value="/resources/css/style.css" var="URL_CSS_STYLE"/>
     <link rel="stylesheet" type="text/css" href="${URL_CSS_STYLE}">
 </head>
-<body>
 <h1><s:message code="app.title"/></h1>
 
 <s:url value="/login" var="URL_LOGIN"/>
@@ -34,18 +33,21 @@
         </c:if>
 
         <div>
-            <label for="username">Username</label>
-            <input placeholder="User ID" type="text" id="username" name="username"/>
+            <label for="username"><s:message code="label.user.username"/></label>
+            <input placeholder="<s:message code='label.user.username'/>" type="text" id="username" name="username"/>
         </div>
         <div>
-            <label for="password">Password</label>
-            <input placeholder="Password" type="password" id="password" name="password"/>
+            <label for="password"><s:message code="label.user.password"/></label>
+            <input placeholder="<s:message code='label.user.password'/>" type="password" id="password" name="password"/>
         </div>
         <div>
-            <button type="submit">Login</button>
+            <button type="submit"><s:message code="auth.button.login"/></button>
         </div>
     </fieldset>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form>
+<hr/>
+<s:url value="/" var="URL_ROOT"/>
+<button onclick="location.href='${URL_ROOT}'"><s:message code="auth.button.top"/></button>
 </body>
 </html>

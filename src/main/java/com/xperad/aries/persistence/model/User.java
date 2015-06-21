@@ -41,20 +41,25 @@ public class User extends BaseEntity implements UserDetails {
     @Column(name = "username", length = 50)
     private String username;
 
-    //    @NotNull
-//    @NotEmpty
+    @NotNull
+    @NotEmpty
     @Size(max = 50)
     @Column(name = "password", length = 50)
     private String password;
+
     @Transient
+    @NotNull
+    @NotEmpty
     private String matchingPassword;
 
     @Column(name = "enabled")
     private boolean enabled;
 
+    @NotEmpty
     @Column(name = "first_name")
     private String firstName;
 
+    @NotEmpty
     @Column(name = "last_name")
     private String lastName;
 
@@ -73,9 +78,9 @@ public class User extends BaseEntity implements UserDetails {
     @Column(name = "time_info")
     private LocalDateTime timeInfo;
 
-    @ValidEmail
     @NotNull
     @NotEmpty
+    @ValidEmail
     @Column(name = "email_address")
     private String emailAddress;
 
