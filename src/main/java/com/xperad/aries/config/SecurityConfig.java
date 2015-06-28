@@ -1,5 +1,6 @@
 package com.xperad.aries.config;
 
+import com.xperad.aries.controller.CustomAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+
 /**
  * @author sun@xperad.com
  * @version 1.0, 2015/05/23
@@ -20,6 +22,9 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 @EnableWebSecurity
 @ComponentScan(basePackageClasses = com.xperad.aries.service.UserServiceImpl.class)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private CustomAuthenticationProvider customAuthProvider;
 
     @Autowired
     public void configureGlobal(UserDetailsService userDetailsService, AuthenticationManagerBuilder auth) throws Exception {
@@ -34,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
             .addFilterBefore(filter, CsrfFilter.class)
+            .authenticationProvider(customAuthProvider)
             .authorizeRequests()
                 .antMatchers("/resources/**", "/signUp", "/successRegister", "/", "/index").permitAll()
                 .anyRequest().authenticated()

@@ -36,7 +36,12 @@
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <input type="submit" value="<s:message code='auth.button.logout'/>"/>
     </form>
-    <button onclick="location.href='${URL_USERS}/${user.id}'"><s:message code="user.info"/></button>
+    <c:if test="${user == 'admin'}">
+        <p>You are temporary Admin!</p>
+    </c:if>
+    <c:if test="${user != 'admin'}">
+        <button onclick="location.href='${URL_USERS}/${user.id}'"><s:message code="user.info"/></button>
+    </c:if>
 </sec:authorize>
 
 <sec:authorize access="isAnonymous()">
