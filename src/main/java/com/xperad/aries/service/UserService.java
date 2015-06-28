@@ -23,6 +23,8 @@ public interface UserService extends UserDetailsService {
 
     User getUser(String username) throws UserNotFoundException;
 
+    User getUserByUserName(String username) throws UserNotFoundException;
+
     void updateUser(User user) throws Exception;
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")

@@ -101,6 +101,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByUserName(String username) throws UserNotFoundException {
+        Criterion criterion = Restrictions.eq("username", username);
+        List<User> users = userRepository.findByCriteria(criterion);
+        if (users == null) {
+            throw new UserNotFoundException("user data is null");
+        } else {
+            if (users.size() == 0) {
+                throw new UserNotFoundException("user data is zero");
+            } else {
+                logger.info("user data: " + users.size() + " / Get first record.");
+                return users.get(0);
+            }
+        }
+    }
+
+    @Override
     public void updateUser(User user) throws Exception {
         User userToUpdate = userRepository.read(user.getId());
         if (userToUpdate == null) {
@@ -127,7 +143,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
-            return getUser(username);
+            return getUserByUserName(username);
         } catch (UserNotFoundException e) {
             throw new UsernameNotFoundException(e.getMessage());
         }
