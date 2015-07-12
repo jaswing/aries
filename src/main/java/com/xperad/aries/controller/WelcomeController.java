@@ -27,7 +27,6 @@ public class WelcomeController {
 
     @RequestMapping(value = {"/", ""}, method = RequestMethod.GET)
     public String index(Model model) {
-        logger.debug("This is test log message.");
 
         List<Message> messages = welcomeService.searchAllMessages();
         if (messages != null) {

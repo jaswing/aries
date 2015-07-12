@@ -9,6 +9,7 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
 import org.hibernate.transform.DistinctRootEntityResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -18,6 +19,7 @@ import java.util.List;
  * @author sun@xperad.com
  * @version 1.0, 2015/05/23
  */
+@Transactional(readOnly = true)
 public abstract class AbstractRepository<E, I extends Serializable> {
 
     @Autowired
@@ -33,11 +35,13 @@ public abstract class AbstractRepository<E, I extends Serializable> {
         return sessionFactory.getCurrentSession();
     }
 
+    @Transactional(readOnly = false)
     public E create(E o) {
         getCurrentSession().save(o);
         return o;
     }
 
+    @Transactional(readOnly = false)
     public E createOrUpdate(E o) {
         getCurrentSession().saveOrUpdate(o);
         return o;
@@ -103,14 +107,17 @@ public abstract class AbstractRepository<E, I extends Serializable> {
         return o;
     }
 
+    @Transactional(readOnly = false)
     public void update(E o) throws Exception {
         getCurrentSession().update(o);
     }
 
+    @Transactional(readOnly = false)
     public void delete(E o) throws Exception {
         getCurrentSession().delete(o);
     }
 
+    @Transactional(readOnly = false)
     public void delete(I id) throws Exception {
         E record = read(id);
         if (record != null) getCurrentSession().delete(record);

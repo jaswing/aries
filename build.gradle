@@ -9,6 +9,8 @@ repositories {
     mavenCentral()
 }
 
+compileJava.options.encoding = 'UTF-8'
+
 ext.slf4jVersion = "1.7.12"
 ext.springSecurityVersion = "4.0.1.RELEASE"
 ext.springVersion = "4.1.6.RELEASE"
@@ -17,7 +19,7 @@ ext.guavaVersion = "18.0"
 ext.hibernateJpaSupportVersion = "4.3.9.Final"
 ext.hibernateValidatorEngineVersion = "5.1.3.Final"
 ext.mysqlJavaConnectorVersion = "5.1.35"
-
+ext.commonsLangVersion = "3.4"
 
 dependencies {
     compile "org.springframework:spring-webmvc:$springVersion",
@@ -34,9 +36,11 @@ dependencies {
             "org.slf4j:log4j-over-slf4j:$slf4jVersion",
             "org.slf4j:jul-to-slf4j:$slf4jVersion",
             "org.slf4j:jcl-over-slf4j:$slf4jVersion",
-            "com.google.guava:guava:$guavaVersion"
+            "com.google.guava:guava:$guavaVersion",
+            "org.apache.commons:commons-lang3:$commonsLangVersion"
 
-    providedCompile "javax.servlet:servlet-api:2.5"
+//    providedCompile "javax.servlet:servlet-api:2.5"
+    providedCompile "javax.servlet:javax.servlet-api:3.1.0"
 
     runtime "ch.qos.logback:logback-classic:1.1.2"
 

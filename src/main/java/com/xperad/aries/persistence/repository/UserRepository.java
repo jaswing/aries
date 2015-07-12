@@ -1,6 +1,6 @@
 package com.xperad.aries.persistence.repository;
 
-import com.xperad.aries.persistence.model.Message;
+import com.xperad.aries.persistence.model.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,5 +11,5 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional(readOnly = true)
-public class MessageRepository extends AbstractRepository<Message, Integer> {
+public class UserRepository extends AbstractRepository<User, Integer> {
 }
