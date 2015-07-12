@@ -19,9 +19,9 @@
 
         <!-- use param.error assuming FormLoginConfigurer#failureUrl contains the query parameter error -->
         <c:if test="${param.error != null}">
-            <h5><s:message code="auth.message.loginFail"/></h5>
+            <h4><s:message code="auth.message.loginFail"/></h4>
             <c:if test="${SPRING_SECURITY_LAST_EXCEPTION != null}">
-                <p class="validate_err">
+                <p class="valid-error">
                     <s:message code="auth.message.cause"/>:
                     <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>
                 </p>
@@ -32,21 +32,27 @@
             <p><s:message code="auth.message.logoutStatus"/></p>
         </c:if>
 
-        <div>
-            <label for="username"><s:message code="label.user.username"/></label>
-            <input placeholder="<s:message code='label.user.username'/>" type="text" id="username" name="username"/>
-        </div>
-        <div>
-            <label for="password"><s:message code="label.user.password"/></label>
-            <input placeholder="<s:message code='label.user.password'/>" type="password" id="password" name="password"/>
-        </div>
-        <div>
-            <button type="submit"><s:message code="auth.button.login"/></button>
-        </div>
+        <p>
+            <label class="input-label" for="username"><s:message code="label.user.username"/></label>
+            <span class="input-field">
+                <input placeholder="<s:message code='label.user.username'/>" type="text" id="username" name="username"/>
+            </span>
+        </p>
+
+        <p>
+            <label class="input-label" for="password"><s:message code="label.user.password"/></label>
+            <span class="input-field">
+                <input placeholder="<s:message code='label.user.password'/>" type="password" id="password" name="password"/>
+            </span>
+        </p>
+
+        <button type="submit"><s:message code="auth.button.login"/></button>
     </fieldset>
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form>
+
 <hr/>
+
 <s:url value="/" var="URL_ROOT"/>
 <button onclick="location.href='${URL_ROOT}'"><s:message code="auth.button.top"/></button>
 </body>
